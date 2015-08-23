@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="scanMusicApp">
+<head>
+    <title>Music</title>
+</head>
+
+
+<body>
+<div ng-controller="musicCtrl">
+    <div class="container-fluid">
+
+
+        <!-- artists column -->
+        <div class="col-md-4">
+            <div class="panel panel-default" ng-init="getArtists()">
+                <div class="panel-heading">Artists</div>
+                <div class="panel-heading"><input ng-model="artistSearch"/></div>
+                <div class="panel-body">
+                    <button ng-repeat="artist in artists | filter : {artist: artistSearch} |limitTo : 1000"
+                            ng-click="setFilter(artist)"
+                            type="button" class="list-group-item">{{artist.artist}}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- albums column -->
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Albums</div>
+                <div class="panel-heading">&nbsp;</div>
+                <div class="panel-body">
+                    <div ng-init="getAlbums()">
+                        <button nm-model="album" ng-repeat="album in albums |filter : {artist : musicFilter.artist} | limitTo:1000"
+                                ng-click="setFilter(album)"
+                                type="button" class="list-group-item">{{album.album}}
+                        </button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- songs column -->
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Songs</div>
+            <div class="panel-heading">&nbsp;</div>
+                <div class="panel-body">
+
+                    <div ng-init="getSongs()">
+
+                        <button nm-model="songs" ng-repeat="song in songs  |filter : {artist : musicFilter.artist, album : getFilterAlbum } | limitTo:1000"
+                                type="button" class="list-group-item">{{song.title}}
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</body>
+</html>

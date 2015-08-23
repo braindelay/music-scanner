@@ -1,0 +1,45 @@
+<!doctype html>
+<html ng-app="scanMusicApp">
+<head>
+    <title>Jobs</title>
+</head>
+
+
+<body>
+<div class="container-fluid">
+
+    <div ng-controller="jobCtrl">
+        <div ng-init="getCurrentJobs()">
+            <table class="table">
+                <thead>
+                <td>State</td>
+                <td>Path</td>
+                <td>Songs Found</td>
+                <td>Songs Scanned</td>
+                <td>Last Song Scanned</td>
+
+                </thead>
+
+                <tr nm-model="currentJobs" ng-repeat="job in currentJobs">
+                    <td>{{job.state}}</td>
+                    <td>{{job.path}}</td>
+                    <td>{{job.songsFound}}</td>
+                    <td>{{job.songsScanned}}</td>
+                    <td>{{job.lastSongFound}}</td>
+                </tr>
+            </table>
+        </div>
+        <form>
+            <div class="form-group">
+                Name: <input type="text" ng-model="job.path"/>
+                <button class="btn btn-default" ng-click="submitJob(job)">Save</button>
+                <br/>
+                <button class="btn btn-default" ng-click="getCurrentJobs()">Refresh</button>
+            </div>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>
