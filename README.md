@@ -7,3 +7,7 @@ jms to handle the scanning jobs, but that's a little too much: I just
 wanted to play with that stuff a little.
 
 Also, I'm using org.jaudiotagger to do the actual MP3 work.
+
+
+You'll need a running mongo for this, but the application can
+set itselfup, once it's running.
