@@ -41,7 +41,7 @@ abstract class AbstractMongoDAOImpl<T> implements MongoDAO<T> {
 
 
     public T find(ObjectId id)  {
-        return getModel().findOne(Query.query(Criteria.where("_id").is(id)), type);
+        return getModel().findOne(Query.query(Criteria.where("_id").is(id)), type, getBaseCollectionName());
     }
 
     public void save(T pojo) {

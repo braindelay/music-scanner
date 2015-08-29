@@ -15,4 +15,5 @@ public interface SongDAO extends MongoDAO<Song> {
     public List<AlbumArtist.Artist> getArtists();
     public List<AlbumArtist> getAlbums(String artist);
     public List<Song> getSongs(String artist, String album);
+
 }

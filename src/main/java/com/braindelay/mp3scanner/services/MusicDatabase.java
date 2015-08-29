@@ -2,6 +2,7 @@ package com.braindelay.mp3scanner.services;
 
 import com.braindelay.mp3scanner.model.AlbumArtist;
 import com.braindelay.mp3scanner.model.Song;
+import org.bson.types.ObjectId;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface MusicDatabase {
      */
     List<AlbumArtist> getAlbums(String artist);
     List<Song> getSongs(String artist, String album);
+
+    Song get(ObjectId songId);
 }

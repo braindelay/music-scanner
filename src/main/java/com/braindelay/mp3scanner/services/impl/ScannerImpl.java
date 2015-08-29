@@ -7,6 +7,7 @@ import com.braindelay.mp3scanner.model.JobData;
 import com.braindelay.mp3scanner.model.Song;
 import com.braindelay.mp3scanner.services.Scanner;
 import com.braindelay.mp3scanner.services.impl.jms.TaskQueueHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.bson.types.ObjectId;
@@ -15,6 +16,7 @@ import org.jaudiotagger.audio.AudioFileIO;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,19 +105,21 @@ public class ScannerImpl implements Scanner {
         return jobDAO.find(id);
     }
 
+
     @Override
     public boolean storeSong(JobData job) {
         log.debug(String.format("Checking job: %s", job.getPath()));
         if (job.getPath().toLowerCase().endsWith(".mp3")){
             try {
 
-                AudioFile mp3File = loadMP3(job);
+                MP3File mp3File = (MP3File)loadMP3(job);
 
-                String artist = mp3File.getTag().getFirst(FieldKey.ARTIST);
-                String album= mp3File.getTag().getFirst(FieldKey.ALBUM);
-                String title= mp3File.getTag().getFirst(FieldKey.TITLE);
+                String artist = getField(mp3File, FieldKey.ARTIST);
+                String album= getField(mp3File, FieldKey.ALBUM);
+                String title= getField(mp3File, FieldKey.TITLE);
+                String track= getField(mp3File,FieldKey.TRACK);
 
-                Song song = new Song(artist,album,title);
+                Song song = new Song(artist,album,title, job.getPath(), track);
                 log.debug(String.format("Saving : %s", job.getPath()));
                 songDAO.save(song);
                 return true;
@@ -133,6 +137,24 @@ public class ScannerImpl implements Scanner {
 
         }
         return false;
+    }
+
+    private String getField(MP3File mp3File, FieldKey key) {
+        String value = "";
+        if (mp3File.hasID3v2Tag()) {
+            value = StringUtils.trimToEmpty(mp3File.getID3v2Tag().getFirst(key));
+            if (!value.isEmpty()){
+                return value;
+            }
+        }
+        if (mp3File.hasID3v1Tag()){
+            value = StringUtils.trimToEmpty(mp3File.getID3v1Tag().getFirst(key));
+            if (!value.isEmpty()){
+                return value;
+            }
+        }
+
+        return StringUtils.trimToEmpty(mp3File.getTag().getFirst(key));
     }
 
     protected AudioFile loadMP3(JobData job) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {

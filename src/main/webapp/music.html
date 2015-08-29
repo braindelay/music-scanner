@@ -45,13 +45,22 @@
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Songs</div>
-            <div class="panel-heading">&nbsp;</div>
+            <div class="panel-heading">
+                <div id="playerDiv" style="display:none" >
+                    <audio id ="player" controls>
+                        <source id="mp3_src" src="" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
                 <div class="panel-body">
 
                     <div ng-init="getSongs()">
 
-                        <button nm-model="songs" ng-repeat="song in songs  |filter : {artist : musicFilter.artist, album : getFilterAlbum } | limitTo:1000"
-                                type="button" class="list-group-item">{{song.title}}
+                        <button nm-model="songs" ng-repeat="song in songs  |filter : searchSongs | orderBy : 'trackNumber' | limitTo:1000"
+                                ng-click="play(song)"
+                                type="button" class="list-group-item">{{renderTitle(song)}}
+
                         </button>
                     </div>
 
