@@ -5,12 +5,12 @@ import com.braindelay.mp3scanner.dao.SongDAO;
 import com.braindelay.mp3scanner.model.JobData;
 import com.braindelay.mp3scanner.model.Song;
 import com.braindelay.mp3scanner.services.impl.jms.TaskQueueHelper;
-import org.apache.activemq.broker.scheduler.Job;
 import org.bson.types.ObjectId;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
@@ -46,7 +46,7 @@ public class ScannerImplTest {
 
     @InjectMocks
     private ScannerImpl mock = new ScannerImpl() {
-        private AudioFile audioFile = new AudioFile(){
+        private MP3File audioFile = new MP3File(){
             @Override
             public Tag getTag() {
                 if (null == super.getTag()){
@@ -146,5 +146,12 @@ public class ScannerImplTest {
 
         verify(jobDAO).save(job);
         Assert.assertEquals(JobData.JobState.Cancelled, job.getState());
+    }
+
+    @Test
+    public void testGetBtId(){
+        ObjectId id = new ObjectId("55e1e946ce8efeee367cc219");
+        mock.getJob(id);
+        verify(jobDAO, times(1)).find(id);
     }
 }

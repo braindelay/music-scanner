@@ -8,7 +8,9 @@ import org.springframework.data.annotation.Id;
 public class AlbumArtist {
 
 
-
+    /**
+     * The album artist model
+     */
     public static class Artist extends AlbumArtist{
         @Id
         private String id;
@@ -21,11 +23,19 @@ public class AlbumArtist {
     private String artist;
     private String album;
 
+    /**
+     * The artist for the album
+     * @return
+     */
     public String getArtist() {
         return artist ;
     }
 
 
+    /**
+     * Get the album title
+     * @return
+     */
     public String getAlbum() {
         return album;
     }

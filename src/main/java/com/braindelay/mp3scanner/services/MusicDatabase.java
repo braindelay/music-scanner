@@ -22,7 +22,19 @@ public interface MusicDatabase {
      * @return
      */
     List<AlbumArtist> getAlbums(String artist);
+
+    /**
+     * Get all the songs for a given artist/album
+     * @param artist
+     * @param album
+     * @return
+     */
     List<Song> getSongs(String artist, String album);
 
+    /**
+     * Get the identified song
+     * @param songId
+     * @return
+     */
     Song get(ObjectId songId);
 }

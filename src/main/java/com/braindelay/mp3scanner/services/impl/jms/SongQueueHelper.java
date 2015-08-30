@@ -21,6 +21,10 @@ public class SongQueueHelper extends JmsHelper<JobData> {
     private Scanner scanner;
 
 
+    /**
+     * Process a task job, which is to say, store the song pointed-at in the job to the model
+     * @param job
+     */
     @Override
     @JmsListener(destination = TASK_QUEUE)
     public void receiveMessage(JobData job) {

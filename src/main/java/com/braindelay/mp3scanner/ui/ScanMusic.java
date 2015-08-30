@@ -111,10 +111,20 @@ public class ScanMusic {
             log.warn(String.format("No song found for id %s", rawSongId));
         }else {
             log.debug(String.format("Streaming song id %s :%s", rawSongId,song));
-            try (InputStream in = new BufferedInputStream(new FileInputStream(song.getPath()));) {
+            try (InputStream in = openInputStreamToSong(song);) {
                 IOUtils.copyLarge(in, response.getOutputStream());
                 response.flushBuffer();
             }
         }
+    }
+
+    /**
+     * Open an input stream to a file
+     * @param song
+     * @return
+     * @throws FileNotFoundException
+     */
+    protected  InputStream openInputStreamToSong(Song song) throws FileNotFoundException {
+        return new BufferedInputStream(new FileInputStream(song.getPath()));
     }
 }

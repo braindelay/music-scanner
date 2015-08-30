@@ -24,6 +24,10 @@ public class TaskQueueHelper extends JmsHelper<JobData> {
     private Scanner scanner;
 
 
+    /**
+     * Process the task job - that is, scan the path for more tasks to process
+     * @param job
+     */
     @Override
     @JmsListener(destination = TASK_QUEUE)
     public void receiveMessage(JobData job) {

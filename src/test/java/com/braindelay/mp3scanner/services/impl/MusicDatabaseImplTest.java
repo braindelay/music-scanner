@@ -2,6 +2,7 @@ package com.braindelay.mp3scanner.services.impl;
 
 import com.braindelay.mp3scanner.dao.SongDAO;
 import com.braindelay.mp3scanner.services.MusicDatabase;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -33,6 +34,13 @@ public class MusicDatabaseImplTest  {
         verify(songDAO,times(1)).getArtists();
         verify(songDAO,times(1)).getAlbums("Bowie, David");
         verify(songDAO,times(1)).getSongs("Bowie, David", "Station to Station");
+    }
+
+    @Test
+    public void testGetSong() {
+        ObjectId id = new ObjectId("55e1e946ce8efeee367cc219");
+        mock.get(id);
+        verify(songDAO,times(1)).find(id);
     }
 
 }

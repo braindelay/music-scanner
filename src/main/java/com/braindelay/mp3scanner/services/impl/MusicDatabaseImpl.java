@@ -44,6 +44,9 @@ public class MusicDatabaseImpl implements MusicDatabase {
         return songDAO.getSongs(artist,album);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Song get(ObjectId songId) {
         return songDAO.find(songId);

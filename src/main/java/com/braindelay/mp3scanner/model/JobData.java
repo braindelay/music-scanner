@@ -43,12 +43,21 @@ public class JobData implements Serializable {
         // needed for spring data
     }
 
+    /**
+     * Build the job of a given type
+     * @param type
+     */
     public JobData(JobType type) {
         this();
         this.type = type;
         state = JobState.Created;
     }
 
+    /**
+     * Create a task from the given job
+     * @param path
+     * @return
+     */
     public JobData createTask(String path) {
         JobData task = new JobData(JobType.Task);
         task.setPath(path);
@@ -62,10 +71,18 @@ public class JobData implements Serializable {
         return task;
     }
 
+    /**
+     * If this is a task, then the parent id is the base job id that this is a task for.
+     * @return
+     */
     public ObjectId getParentId() {
         return parentId;
     }
 
+    /**
+     * Get a count of how many songs were scanned
+     * @return
+     */
     public int getSongsScanned() {
 
         return songsScanned;

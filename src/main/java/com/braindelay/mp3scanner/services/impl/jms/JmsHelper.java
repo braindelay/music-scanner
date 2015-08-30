@@ -33,16 +33,33 @@ abstract class JmsHelper<T extends Serializable> {
 
     private final String queueName;
 
+    /**
+     * Build a JmsHelper for the given queue.
+     * @param queueName
+     */
     protected JmsHelper(String queueName) {
         this.queueName = queueName;
     }
 
+    /**
+     * Get the queue name for the helper
+     * @return
+     */
     protected String getQueueName() {
         return queueName;
     }
+
+    /**
+     * Receive an object message from the named queue
+     * @param pojo
+     */
     abstract public void receiveMessage(T pojo);
 
 
+    /**
+     * Send an object message over the named queue
+     * @param message
+     */
     public void send(final T message){
         MessageCreator messageCreator = new MessageCreator() {
             @Override

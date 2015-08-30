@@ -41,18 +41,27 @@ public class ScannerImpl implements Scanner {
     @Autowired
     private TaskQueueHelper taskQueue;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<JobData> getCurrentJobs() {
         log.info("Getting current jobs");
         return jobDAO.getUIJobs(JobData.JobState.Created, JobData.JobState.Running);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<JobData> getAllJobs() {
         log.info("Getting all jobs");
         return jobDAO.getUIJobs(JobData.JobState.values());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void startJob(String path) {
         log.debug(String.format("Creating new job for %s", path));
@@ -63,12 +72,18 @@ public class ScannerImpl implements Scanner {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void cancelJob(JobData job) {
         job.setState(JobData.JobState.Cancelled);
         jobDAO.save(job);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void process(JobData jobData) {
         log.debug(String.format("Procesing job : %s", jobData));
@@ -100,12 +115,18 @@ public class ScannerImpl implements Scanner {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JobData getJob(ObjectId id) {
         return jobDAO.find(id);
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean storeSong(JobData job) {
         log.debug(String.format("Checking job: %s", job.getPath()));
@@ -139,6 +160,12 @@ public class ScannerImpl implements Scanner {
         return false;
     }
 
+    /**
+     * Check the underlying tags from the file and select the first one with a value
+     * @param mp3File
+     * @param key
+     * @return
+     */
     private String getField(MP3File mp3File, FieldKey key) {
         String value = "";
         if (mp3File.hasID3v2Tag()) {
@@ -157,6 +184,16 @@ public class ScannerImpl implements Scanner {
         return StringUtils.trimToEmpty(mp3File.getTag().getFirst(key));
     }
 
+    /**
+     * Load the file as an MP3
+     * @param job
+     * @return
+     * @throws CannotReadException
+     * @throws IOException
+     * @throws TagException
+     * @throws ReadOnlyFileException
+     * @throws InvalidAudioFrameException
+     */
     protected AudioFile loadMP3(JobData job) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
         return AudioFileIO.read(new File(job.getPath()));
     }

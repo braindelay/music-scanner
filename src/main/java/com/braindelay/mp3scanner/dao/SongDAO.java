@@ -12,8 +12,25 @@ import java.util.List;
 
 public interface SongDAO extends MongoDAO<Song> {
 
+    /**
+     * Get all the artists in the database - sorted alphabetically
+     * @return
+     */
     public List<AlbumArtist.Artist> getArtists();
+
+    /**
+     * Get all the albums in the database, sorted by artist and then album.
+     * @param artist
+     * @return
+     */
     public List<AlbumArtist> getAlbums(String artist);
+
+    /**
+     * Get all the songs in the database
+     * @param artist
+     * @param album
+     * @return
+     */
     public List<Song> getSongs(String artist, String album);
 
 }

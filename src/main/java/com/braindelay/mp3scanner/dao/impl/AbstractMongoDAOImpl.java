@@ -50,13 +50,6 @@ abstract class AbstractMongoDAOImpl<T> implements MongoDAO<T> {
 
     }
 
-    public List<T> findAll() {
-        log.debug(String.format("Loading data from %s", getBaseCollectionName()));
-        List<T> results = getModel().findAll(type,getBaseCollectionName());
-        log.debug(String.format("Loaded %s results from %s", results.size(), getBaseCollectionName()));
-        return results;
-    }
-
     public List<T> find(Query query) {
         log.debug(String.format("Loading data from %s for query %s ", getBaseCollectionName(), query));
         List<T> results = getModel().find(query, type, getBaseCollectionName());
