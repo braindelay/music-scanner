@@ -47,6 +47,11 @@
             <div class="panel-heading">Songs</div>
             <div class="panel-heading">
                 <div id="playerDiv" style="display:none" >
+                    <div ng-model="songAudioData" id="audioData">
+                        Artist: {{songAudioData.artist}}<br/>
+                        Album: {{songAudioData.album}}<br/>
+                        Title: {{songAudioData.title}}
+                    </div>
                     <audio id ="player" controls>
                         <source id="mp3_src" src="" type="audio/mpeg">
                         Your browser does not support the audio element.

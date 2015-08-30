@@ -53,6 +53,10 @@ scanMusicControllers
     // show the player
     $('#playerDiv').show();
 
+    // add some track data
+    $scope.songAudioData = song;
+
+
     //find the player, set the path to the song
     // and then stop, reload, and play it
     var audio = $("#player");
