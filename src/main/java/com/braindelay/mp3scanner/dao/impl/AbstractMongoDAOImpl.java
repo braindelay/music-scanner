@@ -19,21 +19,22 @@ abstract class AbstractMongoDAOImpl<T> implements MongoDAO<T> {
     private MongoTemplate mongoOps;
     private final Class<T> type;
 
-    protected final Log log = LogFactory.getLog(getClass());
+    final Log log = LogFactory.getLog(getClass());
 
     public AbstractMongoDAOImpl(Class<T> type) {
         this.type=type;
-        MongoClient mongoClient = null;
+
         try {
-            mongoClient = new MongoClient();
+            MongoClient mongoClient= new MongoClient();
+            mongoOps = new MongoTemplate(mongoClient, "music");
         } catch (UnknownHostException e) {
             throw new IllegalArgumentException("Can't get to mongo",e);
         }
-        mongoOps = new MongoTemplate(mongoClient, "music");
+
 
     }
 
-    protected MongoTemplate getModel() {
+    MongoTemplate getModel() {
         return mongoOps;
     }
 

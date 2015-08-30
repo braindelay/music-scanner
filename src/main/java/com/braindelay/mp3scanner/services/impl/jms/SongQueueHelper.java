@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SongQueueHelper extends JmsHelper<JobData> {
     private final static String TASK_QUEUE = "songs";
 
-    protected SongQueueHelper() {
+    SongQueueHelper() {
         super(TASK_QUEUE);
     }
 

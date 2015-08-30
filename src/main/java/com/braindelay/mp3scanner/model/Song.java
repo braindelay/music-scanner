@@ -38,7 +38,7 @@ public class Song {
         this.track = track;
     }
 
-    public ObjectId getId() {
+    private ObjectId getId() {
         return id;
     }
 

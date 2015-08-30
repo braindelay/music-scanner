@@ -13,7 +13,6 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 import java.io.Serializable;
 
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 
 /**

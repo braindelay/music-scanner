@@ -1,7 +1,6 @@
 package com.braindelay.mp3scanner.dao;
 
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.List;

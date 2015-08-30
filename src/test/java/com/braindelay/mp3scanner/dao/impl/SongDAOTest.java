@@ -39,7 +39,7 @@ public class SongDAOTest {
         };
 
 
-        AggregationResults<Object> result = new AggregationResults<Object>(new ArrayList<Object>(), new BasicDBObject() );
+        AggregationResults<Object> result = new AggregationResults<>(new ArrayList<>(), new BasicDBObject() );
         Mockito.when(template.aggregate(any(Aggregation.class),eq(dao.getBaseCollectionName()),any(Class.class))).thenReturn(result);
 
     }

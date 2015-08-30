@@ -32,7 +32,7 @@
                 <div class="panel-heading">&nbsp;</div>
                 <div class="panel-body">
                     <div ng-init="getAlbums()">
-                        <button nm-model="album" ng-repeat="album in albums |filter : {artist : musicFilter.artist} | limitTo:1000"
+                        <button ng-model="album" ng-repeat="album in albums |filter : {artist : musicFilter.artist} | limitTo:1000"
                                 ng-click="setFilter(album)"
                                 type="button" class="list-group-item">{{album.album}}
                         </button>
@@ -57,7 +57,7 @@
 
                     <div ng-init="getSongs()">
 
-                        <button nm-model="songs" ng-repeat="song in songs  |filter : searchSongs | orderBy : 'trackNumber' | limitTo:1000"
+                        <button ng-model="songs" ng-repeat="song in songs  |filter : searchSongs | orderBy : 'trackNumber' | limitTo:1000"
                                 ng-click="play(song)"
                                 type="button" class="list-group-item">{{renderTitle(song)}}
 

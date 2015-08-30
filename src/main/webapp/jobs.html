@@ -12,12 +12,13 @@
         <div ng-init="getCurrentJobs()">
             <table class="table">
                 <thead>
+                <tr>
                 <td>State</td>
                 <td>Path</td>
                 <td>Songs Found</td>
                 <td>Songs Scanned</td>
                 <td>Last Song Scanned</td>
-
+                </tr>
                 </thead>
 
                 <tr nm-model="currentJobs" ng-repeat="job in currentJobs">

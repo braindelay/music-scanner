@@ -20,9 +20,9 @@ import java.util.List;
  * Rest API for the app
  */
 @RestController()
-public class ScanMusic {
+class ScanMusic {
 
-    protected final Log log = LogFactory.getLog(getClass());
+    private final Log log = LogFactory.getLog(getClass());
     @Autowired
     private Scanner scanner;
 
@@ -111,7 +111,7 @@ public class ScanMusic {
             log.warn(String.format("No song found for id %s", rawSongId));
         }else {
             log.debug(String.format("Streaming song id %s :%s", rawSongId,song));
-            try (InputStream in = openInputStreamToSong(song);) {
+            try (InputStream in = openInputStreamToSong(song)) {
                 IOUtils.copyLarge(in, response.getOutputStream());
                 response.flushBuffer();
             }
@@ -124,7 +124,7 @@ public class ScanMusic {
      * @return
      * @throws FileNotFoundException
      */
-    protected  InputStream openInputStreamToSong(Song song) throws FileNotFoundException {
+    private InputStream openInputStreamToSong(Song song) throws FileNotFoundException {
         return new BufferedInputStream(new FileInputStream(song.getPath()));
     }
 }

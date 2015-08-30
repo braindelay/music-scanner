@@ -17,7 +17,6 @@ import java.util.List;
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Daniel on 22/08/2015.
@@ -37,8 +36,6 @@ public class JobDAOTest {
             protected MongoTemplate getModel() {
                 return template;
             }
-
-            ;
         };
 
 

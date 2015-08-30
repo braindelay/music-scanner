@@ -2,7 +2,6 @@ package com.braindelay.mp3scanner.services.impl;
 
 import com.braindelay.mp3scanner.dao.JobDAO;
 import com.braindelay.mp3scanner.dao.SongDAO;
-import com.braindelay.mp3scanner.model.AlbumArtist;
 import com.braindelay.mp3scanner.model.JobData;
 import com.braindelay.mp3scanner.model.Song;
 import com.braindelay.mp3scanner.services.Scanner;
@@ -32,7 +31,7 @@ import java.util.List;
 @Service
 public class ScannerImpl implements Scanner {
 
-    protected final Log log = LogFactory.getLog(getClass());
+    private final Log log = LogFactory.getLog(getClass());
     @Autowired
     private JobDAO jobDAO;
 
@@ -144,15 +143,7 @@ public class ScannerImpl implements Scanner {
                 log.debug(String.format("Saving : %s", job.getPath()));
                 songDAO.save(song);
                 return true;
-            } catch (IOException e) {
-                log.error(String.format("Problem loading file at %s", job.getPath()));
-            } catch (TagException e) {
-                log.error(String.format("Problem loading file at %s", job.getPath()));
-            } catch (ReadOnlyFileException e) {
-                log.error(String.format("Problem loading file at %s", job.getPath()));
-            } catch (CannotReadException e) {
-                log.error(String.format("Problem loading file at %s", job.getPath()));
-            } catch (InvalidAudioFrameException e) {
+            } catch (IOException | InvalidAudioFrameException | CannotReadException | ReadOnlyFileException | TagException e) {
                 log.error(String.format("Problem loading file at %s", job.getPath()));
             }
 
@@ -167,7 +158,7 @@ public class ScannerImpl implements Scanner {
      * @return
      */
     private String getField(MP3File mp3File, FieldKey key) {
-        String value = "";
+        String value;
         if (mp3File.hasID3v2Tag()) {
             value = StringUtils.trimToEmpty(mp3File.getID3v2Tag().getFirst(key));
             if (!value.isEmpty()){
@@ -194,7 +185,7 @@ public class ScannerImpl implements Scanner {
      * @throws ReadOnlyFileException
      * @throws InvalidAudioFrameException
      */
-    protected AudioFile loadMP3(JobData job) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
+    AudioFile loadMP3(JobData job) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
         return AudioFileIO.read(new File(job.getPath()));
     }
 

@@ -45,14 +45,14 @@ public class SongDAOImpl extends AbstractMongoDAOImpl<Song> implements SongDAO {
     public List<AlbumArtist> getAlbums(String artist) {
 
         // db.songs.aggregate([ {$group :{_id : { artist : "$artist", album: "$album"}}}, {$sort: {_id: 1}} ])
-        List<AggregationOperation> operations = new ArrayList<AggregationOperation>();
+        List<AggregationOperation> operations = new ArrayList<>();
 
         if (!StringUtils.isBlank(artist)) {
             operations.add(Aggregation.match(Criteria.where(Song.Fields.ARTIST).is(artist)));
         }
         operations.add(Aggregation.group(Song.Fields.ARTIST, Song.Fields.ALBUM));
         operations.add(Aggregation.sort(Sort.Direction.ASC, Song.Fields.ALBUM));
-        Aggregation agg = Aggregation.newAggregation(operations.toArray(new AggregationOperation[0]));
+        Aggregation agg = Aggregation.newAggregation(operations.toArray(new AggregationOperation[operations.size()]));
 
 
         AggregationResults<AlbumArtist> result = getModel().aggregate(agg, getBaseCollectionName(), AlbumArtist.class);

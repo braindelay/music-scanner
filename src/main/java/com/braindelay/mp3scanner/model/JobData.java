@@ -20,7 +20,7 @@ public class JobData implements Serializable {
     }
 
     public enum JobState {
-        Created, Running, Completed, Errored, Cancelled;
+        Created, Running, Completed, Errored, Cancelled
     }
 
     public enum JobType {
