@@ -5,20 +5,27 @@ scanMusicControllers
     // get the current jobs from the server
     $scope.getArtists = function() {
       $http.get('/music/library/artists' , { cache : false } ).success(function(data) {
+        $('#artistsLoading').show();
         $scope.artists = data;
+        $('#artistsLoading').hide();
+
       });
     };
     // get the current albums from the server
     $scope.getAlbums = function() {
           $http.get('/music/library/albums' , { cache : false } ).success(function(data) {
+            $('#albumsLoading').show();
             $scope.albums = data;
+            $('#albumsLoading').hide();
           });
         };
 
     // get the current songs from the server
     $scope.getSongs = function() {
           $http.get('/music/library/songs' , { cache : false } ).success(function(data) {
+            $('#songsLoading').show();
            $scope.songs = data;
+           $('#songsLoading').hide();
           });
         };
 

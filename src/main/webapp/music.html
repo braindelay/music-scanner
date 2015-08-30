@@ -16,6 +16,7 @@
                 <div class="panel-heading">Artists</div>
                 <div class="panel-heading"><input ng-model="artistSearch"/></div>
                 <div class="panel-body">
+                    <div id = "artistsLoading">Loading</div>
                     <button ng-repeat="artist in artists | filter : {artist: artistSearch} |limitTo : 1000"
                             ng-click="setFilter(artist)"
                             type="button" class="list-group-item">{{artist.artist}}
@@ -31,6 +32,7 @@
                 <div class="panel-heading">Albums</div>
                 <div class="panel-heading">&nbsp;</div>
                 <div class="panel-body">
+                    <div id = "albumsLoading">Loading</div>
                     <div ng-init="getAlbums()">
                         <button ng-model="album" ng-repeat="album in albums |filter : {artist : musicFilter.artist} : true | limitTo:1000"
                                 ng-click="setFilter(album)"
@@ -59,7 +61,7 @@
                 </div>
             </div>
                 <div class="panel-body">
-
+                    <div id = "songsLoading">Loading</div>
                     <div ng-init="getSongs()">
 
                         <button ng-model="songs" ng-repeat="song in songs  |filter : searchSongs | orderBy : 'trackNumber' | limitTo:1000"
