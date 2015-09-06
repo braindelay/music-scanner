@@ -3,9 +3,14 @@ package com.braindelay.mp3scanner.services.impl.jms;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jms.config.DefaultJmsListenerContainerFactory;
+import org.springframework.jms.config.JmsListenerContainerFactory;
+import org.springframework.jms.config.SimpleJmsListenerContainerFactory;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Session;
@@ -44,6 +49,19 @@ abstract class JmsHelper<T extends Serializable> {
      * @param pojo
      */
     abstract public void receiveMessage(T pojo);
+
+
+    /*
+     Strictly speaking this bean is not necessary as boot creates a default.
+     It's just here to show how to set up a container factory.
+      */
+    @Bean
+    JmsListenerContainerFactory<?> myJmsContainerFactory(ConnectionFactory connectionFactory) {
+        DefaultJmsListenerContainerFactory jmsDynamicFactory = new DefaultJmsListenerContainerFactory();
+        jmsDynamicFactory.setConcurrency("3-5");
+        jmsDynamicFactory.setConnectionFactory(connectionFactory);
+        return jmsDynamicFactory;
+    }
 
 
     /**

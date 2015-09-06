@@ -26,7 +26,7 @@ public class SongQueueHelper extends JmsHelper<JobData> {
      * @param job
      */
     @Override
-    @JmsListener(destination = TASK_QUEUE)
+    @JmsListener(destination = TASK_QUEUE, containerFactory ="myJmsContainerFactory")
     public void receiveMessage(JobData job) {
         log.debug(String.format("Received message on queue [%s]: [%s]", getQueueName(), job));
         scanner.storeSong(job);
